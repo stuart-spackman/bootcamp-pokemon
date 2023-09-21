@@ -3,44 +3,35 @@
 const container = document.querySelector('#container');
 const baseURL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'
 
-// const pokemonArray = [];
-
-// for (let i = 1; i <= 151; i++) {
-//     const pokemonObject = {};
-//     pokemonObject[`pokemon${i}`] = document.createElement('div');
-//     pokemonObject[`pokemon${i}`].classList.add('pokemon');
-//     pokemonObject[`label${i}`] = document.createElement('span');
-//     pokemonObject[`label${i}`].innerText = `#${i}`;
-//     pokemonObject[`newImg${i}`] = document.createElement('img');
-//     pokemonObject[`newImg${i}`].src = `${baseURL + i.toString()}.png`;
-//     pokemonArray.push(pokemonObject);
-// }
-
+pokemonArray = [];
 for (let i = 1; i <= 151; i++) {
+    let pokemonObject = {}
     const pokemon = document.createElement('div');
     pokemon.classList.add('pokemon');
     const label = document.createElement('span');
     label.innerText = `#${i}`;
     const newImg = document.createElement('img');
     newImg.src = `${baseURL + i.toString()}.png`;
-
     pokemon.appendChild(newImg);
     pokemon.appendChild(label);
-    container.appendChild(pokemon);
-
+    pokemonObject[`pokemon${i}`] = pokemon;
+    pokemonArray.push(pokemonObject);
 }
 
-// if set timeout is needed use the following example code 
-// const id = setInterval(() => {
-//     console.log(Math.random());
-// }, 1000);
+let start = 1;
+let interval = 33;
 
-// setTimeout(() => {
-//     clearInterval(id);
-// }, 5000);
+let pokemonPrinter = (i) => {
+    if (i <= 151) {
+        container.appendChild(pokemonArray[i - 1][`pokemon${i}`]);
+    }
+}
 
+const printer = setInterval(() => {
+    pokemonPrinter(start++);
+}, interval);
 
-{/* <div>
-    <img>
-    <span>Number</span>
-</div> */}
+setTimeout(() => {
+    clearInterval(printer);
+    alert('Interval function now cleared. All pokemon have been printed to the screen.');
+}, interval * 160); 
